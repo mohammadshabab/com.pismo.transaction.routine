@@ -1,0 +1,14 @@
+{"time":"2024-09-27T16:21:47.0291982+05:30","level":"INFO","msg":"databse: ","URI":"root:Welcome@123@tcp(localhost:3306)/pismodb?parseTime=true"}
+{"time":"2024-09-27T16:21:47.1212774+05:30","level":"INFO","msg":"connection was successful"}
+{"time":"2024-09-27T16:26:04.9763547+05:30","level":"INFO","msg":"databse: ","URI":"root:******@tcp(localhost:3306)/pismodb?parseTime=true"}
+{"time":"2024-09-27T16:26:05.0494061+05:30","level":"INFO","msg":"connection was successful"}
+{"time":"2024-09-27T16:29:49.9330962+05:30","level":"INFO","msg":"databse: ","URI":"root:***@tcp(localhost:3306)/pismodb?parseTime=true"}
+{"time":"2024-09-27T16:29:50.0005999+05:30","level":"INFO","msg":"connection was successful"}
+{"time":"2024-09-27T16:39:45.8631224+05:30","level":"INFO","msg":"databse: ","URI":"root:***@tcp(localhost:3306)/pismodb?parseTime=true"}
+{"time":"2024-09-27T16:39:45.927867+05:30","level":"INFO","msg":"connection was successful"}
+{"time":"2024-09-27T16:47:27.9786093+05:30","level":"INFO","msg":"databse: ","URI":"root:***@tcp(localhost:3306)/pismodb?parseTime=true"}
+{"time":"2024-09-27T16:47:28.0418191+05:30","level":"INFO","msg":"connection was successful"}
+{"time":"2024-09-27T16:47:48.3933282+05:30","level":"INFO","msg":"Created a trnsaction ","result ":"!ERROR:json: unsupported type: func() time.Time"}
+{"time":"2024-09-27T16:49:32.3319073+05:30","level":"INFO","msg":"Created a trnsaction ","result ":"!ERROR:json: unsupported type: func() time.Time"}
+{"time":"2024-09-27T16:50:43.4823562+05:30","level":"INFO","msg":"Created a trnsaction ","result ":"!ERROR:json: unsupported type: func() time.Time"}
+{"time":"2024-09-27T16:51:11.0722081+05:30","level":"INFO","msg":"Created a trnsaction ","result ":"!ERROR:json: unsupported type: func() time.Time"}
