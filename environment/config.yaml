@@ -9,6 +9,5 @@ database:
   dbport: 3306
   dbname: pismodb
 
-  #url: root:Welcome@123@tcp(localhost:3306)/pismodb?parseTime=true
 
   
