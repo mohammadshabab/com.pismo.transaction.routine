@@ -10,6 +10,7 @@ type DatabaseConfig struct {
 
 type ServerConfig struct {
 	Port string `yaml:"port"`
+	Host string `yaml:"port"`
 }
 
 type AppConfig struct {

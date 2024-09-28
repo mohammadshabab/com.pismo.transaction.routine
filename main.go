@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log/slog"
 
 	"com.pismo.transaction.routine/apiroutes"
 	"com.pismo.transaction.routine/internal/config"
@@ -10,13 +10,12 @@ import (
 )
 
 func main() {
-
+	//instantiate DB connection
 	database.Connection()
 	cfg := config.EnvConfig()
-	fmt.Printf("Port %s ", cfg.Server.Port)
+	//Create engine
 	route := gin.New()
 	apiroutes.AppRoutes(route)
-	route.Run(":" + cfg.Server.Port)
-
-	//fmt.Println("db url ", AppConfig.Database.Url)
+	slog.Info("Starting server on: ", "serverHost: ", cfg.Server.Host, "serverPort: ", cfg.Server.Port)
+	route.Run(cfg.Server.Host + ":" + cfg.Server.Port)
 }
