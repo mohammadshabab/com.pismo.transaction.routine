@@ -34,7 +34,7 @@ func getConfig(log *slog.Logger) (models.AppConfig, error) {
 	// Read the configuration file
 	err := conf.ReadInConfig()
 	if err != nil {
-		log.Error("Error reading config file", "error", err, configErr)
+		slog.Error("Error reading config file", "error", err, configErr)
 		return models.AppConfig{}, err // Return empty config and error
 	}
 
