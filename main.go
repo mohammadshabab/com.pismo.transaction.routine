@@ -10,9 +10,9 @@ import (
 )
 
 func main() {
-	//instantiate DB connection
-	database.Connection()
+
 	cfg := config.EnvConfig()
+	database.Connection(cfg)
 	//Create engine
 	route := gin.New()
 	apiroutes.AppRoutes(route)

@@ -16,7 +16,7 @@ func CreateAccount(c *gin.Context) {
 		return
 	}
 
-	result := database.DB.Create(&newAccount)
+	result := database.Repo.RDB.Create(&newAccount)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to create account"})
 		return
@@ -33,7 +33,7 @@ func GetAccount(c *gin.Context) {
 	}
 
 	var account models.Account
-	if result := database.DB.First(&account, accountId); result.Error != nil {
+	if result := database.Repo.RDB.First(&account, accountId); result.Error != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Account not found"})
 		return
 	}

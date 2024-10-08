@@ -4,16 +4,26 @@ import (
 	"fmt"
 	"log/slog"
 
-	"com.pismo.transaction.routine/internal/config"
 	"com.pismo.transaction.routine/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB
+var Repo *Repository
 
-func Connection() {
-	cfg := config.EnvConfig()
+type Repository struct {
+	RDB *gorm.DB
+}
+
+// NewRepository allows for dependency injection of the *gorm.DB connection.
+func NewRepository(db *gorm.DB) *Repository {
+	return &Repository{
+		RDB: db,
+	}
+}
+
+func Connection(cfg models.AppConfig) {
+	//cfg := config.EnvConfig()
 	username := cfg.Database.Username
 	password := cfg.Database.Password
 	dbHost := cfg.Database.Dbhost
@@ -25,7 +35,8 @@ func Connection() {
 	if err != nil {
 		slog.Error("Unable to Establish connection, database error")
 	}
-	DB = conn
-	DB.Debug().AutoMigrate(&models.Account{}, &models.Transaction{})
+	Repo = NewRepository(conn)
+	// Repo.RDB = conn
+	Repo.RDB.Debug().AutoMigrate(&models.Account{}, &models.Transaction{})
 	slog.Info("connection was successful")
 }

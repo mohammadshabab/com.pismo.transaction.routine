@@ -20,7 +20,7 @@ func CreateTransaction(c *gin.Context) {
 	}
 
 	// Starting a new database transaction
-	result := database.DB.Begin()
+	result := database.Repo.RDB.Begin()
 	if err := result.Error; err != nil {
 		slog.Error("Failed to start a transaction", "error", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Unable to start transaction"})
