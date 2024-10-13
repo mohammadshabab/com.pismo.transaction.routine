@@ -11,8 +11,14 @@ import (
 func init() {
 
 }
-func AppLog() *slog.Logger {
-	envPath := filepath.Join("var/logs", "log.txt")
+func AppLog() {
+	// Ensure the directory exists
+	err := os.MkdirAll("/var/logs", os.ModePerm)
+	if err != nil {
+		slog.Error("Failed to create log directory ", "err: ", err)
+		os.Exit(http.StatusInternalServerError)
+	}
+	envPath := filepath.Join("/var/logs", "log.txt")
 	logFile, err := os.OpenFile(envPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		slog.Error("error while creating log file ", "logPath: ", envPath)
@@ -27,5 +33,5 @@ func AppLog() *slog.Logger {
 		slog.NewJSONHandler(writer, handlerOpts),
 	)
 	slog.SetDefault(logger)
-	return logger
+
 }

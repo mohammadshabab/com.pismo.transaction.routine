@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"com.pismo.transaction.routine/models"
-	"com.pismo.transaction.routine/utils"
 	"github.com/spf13/viper"
 )
 
@@ -21,7 +20,7 @@ func init() {
 	)
 
 }
-func getConfig(log *slog.Logger) (models.AppConfig, error) {
+func getConfig() (models.AppConfig, error) {
 	conf := viper.New()
 	envPath := filepath.Join("environment", "config.yaml")
 	conf.SetConfigFile(envPath)
@@ -42,7 +41,7 @@ func getConfig(log *slog.Logger) (models.AppConfig, error) {
 
 	// Unmarshal the config into AppConfig struct
 	if err := conf.Unmarshal(&cfg); err != nil {
-		log.Error("Error unmarshalling config", "error", err, configErr)
+		slog.Error("Error unmarshalling config", "error", err, configErr)
 		return models.AppConfig{}, err // Return empty config and error
 	}
 
@@ -50,8 +49,7 @@ func getConfig(log *slog.Logger) (models.AppConfig, error) {
 }
 
 func EnvConfig() models.AppConfig {
-	logger := utils.AppLog()
-	AppConfig, err := getConfig(logger)
+	AppConfig, err := getConfig()
 	if err != nil {
 		slog.Error("Unable to fetch config ")
 		os.Exit(http.StatusInternalServerError)
