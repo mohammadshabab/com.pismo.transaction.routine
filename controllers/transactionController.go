@@ -19,6 +19,14 @@ func CreateTransaction(c *gin.Context) {
 		return
 	}
 
+	//check if account id exist before proceeding with transaction creation
+	var account models.Account
+	if err := database.Repo.RDB.First(&account, newTransaction.AccountID).Error; err != nil {
+		slog.Error("account not found ", "account_id ", newTransaction.AccountID)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "account does not exist"})
+		return
+	}
+
 	// Starting a new database transaction
 	result := database.Repo.RDB.Begin()
 	if err := result.Error; err != nil {

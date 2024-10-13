@@ -52,10 +52,15 @@ func TestCreateTransaction(t *testing.T) {
 			expectedStatusCode: http.StatusCreated,
 			expectedResponse:   gin.H{"account_id": float64(1), "operation_type_id": float64(4), "amount": float64(250.45)},
 			mockExpectations: func() {
+				// Mock account existence
+				sqlMock.ExpectQuery("^SELECT \\* FROM `accounts` WHERE `accounts`.`account_id` = \\? ORDER BY `accounts`.`account_id` LIMIT \\?$").
+					WithArgs(1, 1).
+					WillReturnRows(sqlmock.NewRows([]string{"account_id"}).AddRow(1))
+
 				sqlMock.ExpectBegin()
-				sqlMock.ExpectExec("INSERT INTO `transactions`"). // Adjust the query according to your actual query structure
-											WithArgs(int(1), int(4), float64(250.45), sqlmock.AnyArg()).
-											WillReturnResult(sqlmock.NewResult(1, 1))
+				sqlMock.ExpectExec("INSERT INTO `transactions`").
+					WithArgs(int(1), int(4), float64(250.45), sqlmock.AnyArg()).
+					WillReturnResult(sqlmock.NewResult(1, 1))
 				sqlMock.ExpectCommit()
 			},
 		},
@@ -65,10 +70,14 @@ func TestCreateTransaction(t *testing.T) {
 			expectedStatusCode: http.StatusCreated,
 			expectedResponse:   gin.H{"account_id": float64(1), "operation_type_id": float64(2), "amount": float64(250.45)},
 			mockExpectations: func() {
+				sqlMock.ExpectQuery("^SELECT \\* FROM `accounts` WHERE `accounts`.`account_id` = \\? ORDER BY `accounts`.`account_id` LIMIT \\?$").
+					WithArgs(1, 1).
+					WillReturnRows(sqlmock.NewRows([]string{"account_id"}).AddRow(1))
+
 				sqlMock.ExpectBegin()
-				sqlMock.ExpectExec("INSERT INTO `transactions`"). // Adjust the query according to your actual query structure
-											WithArgs(1, 2, float64(250.45), sqlmock.AnyArg()).
-											WillReturnResult(sqlmock.NewResult(1, 1))
+				sqlMock.ExpectExec("INSERT INTO `transactions`").
+					WithArgs(1, 2, float64(250.45), sqlmock.AnyArg()).
+					WillReturnResult(sqlmock.NewResult(1, 1))
 				sqlMock.ExpectCommit()
 			},
 		},
@@ -78,10 +87,14 @@ func TestCreateTransaction(t *testing.T) {
 			expectedStatusCode: http.StatusCreated,
 			expectedResponse:   gin.H{"account_id": float64(1), "operation_type_id": float64(1), "amount": -float64(250.45)},
 			mockExpectations: func() {
+				sqlMock.ExpectQuery("^SELECT \\* FROM `accounts` WHERE `accounts`.`account_id` = \\? ORDER BY `accounts`.`account_id` LIMIT \\?$").
+					WithArgs(1, 1).
+					WillReturnRows(sqlmock.NewRows([]string{"account_id"}).AddRow(1))
+
 				sqlMock.ExpectBegin()
-				sqlMock.ExpectExec("INSERT INTO `transactions`"). // Adjust the query according to your actual query structure
-											WithArgs(1, 1, -float64(250.45), sqlmock.AnyArg()).
-											WillReturnResult(sqlmock.NewResult(1, 1))
+				sqlMock.ExpectExec("INSERT INTO `transactions`").
+					WithArgs(1, 1, -float64(250.45), sqlmock.AnyArg()).
+					WillReturnResult(sqlmock.NewResult(1, 1))
 				sqlMock.ExpectCommit()
 			},
 		},
@@ -91,10 +104,14 @@ func TestCreateTransaction(t *testing.T) {
 			expectedStatusCode: http.StatusCreated,
 			expectedResponse:   gin.H{"account_id": float64(1), "operation_type_id": float64(3), "amount": -float64(250.45)},
 			mockExpectations: func() {
+				sqlMock.ExpectQuery("^SELECT \\* FROM `accounts` WHERE `accounts`.`account_id` = \\? ORDER BY `accounts`.`account_id` LIMIT \\?$").
+					WithArgs(1, 1).
+					WillReturnRows(sqlmock.NewRows([]string{"account_id"}).AddRow(1))
+
 				sqlMock.ExpectBegin()
-				sqlMock.ExpectExec("INSERT INTO `transactions`"). // Adjust the query according to your actual query structure
-											WithArgs(int(1), int(3), -float64(250.45), sqlmock.AnyArg()).
-											WillReturnResult(sqlmock.NewResult(1, 1))
+				sqlMock.ExpectExec("INSERT INTO `transactions`").
+					WithArgs(int(1), int(3), -float64(250.45), sqlmock.AnyArg()).
+					WillReturnResult(sqlmock.NewResult(1, 1))
 				sqlMock.ExpectCommit()
 			},
 		},
@@ -110,6 +127,9 @@ func TestCreateTransaction(t *testing.T) {
 			expectedStatusCode: http.StatusInternalServerError,
 			expectedResponse:   gin.H{"error": "Unable to start transaction"},
 			mockExpectations: func() {
+				sqlMock.ExpectQuery("^SELECT \\* FROM `accounts` WHERE `accounts`.`account_id` = \\? ORDER BY `accounts`.`account_id` LIMIT \\?$").
+					WithArgs(1, 1).
+					WillReturnRows(sqlmock.NewRows([]string{"account_id"}).AddRow(1))
 				sqlMock.ExpectBegin().WillReturnError(gorm.ErrInvalidTransaction)
 			},
 		},
@@ -119,6 +139,9 @@ func TestCreateTransaction(t *testing.T) {
 			expectedStatusCode: http.StatusInternalServerError,
 			expectedResponse:   gin.H{"error": "Unable to create transaction"},
 			mockExpectations: func() {
+				sqlMock.ExpectQuery("^SELECT \\* FROM `accounts` WHERE `accounts`.`account_id` = \\? ORDER BY `accounts`.`account_id` LIMIT \\?$").
+					WithArgs(1, 1).
+					WillReturnRows(sqlmock.NewRows([]string{"account_id"}).AddRow(1))
 				sqlMock.ExpectBegin()
 				sqlMock.ExpectExec("INSERT INTO `transactions`").
 					WithArgs(1, 4, float64(250.45), sqlmock.AnyArg()).
@@ -131,6 +154,9 @@ func TestCreateTransaction(t *testing.T) {
 			expectedStatusCode: http.StatusInternalServerError,
 			expectedResponse:   gin.H{"error": "Unable to commit transaction"},
 			mockExpectations: func() {
+				sqlMock.ExpectQuery("^SELECT \\* FROM `accounts` WHERE `accounts`.`account_id` = \\? ORDER BY `accounts`.`account_id` LIMIT \\?$").
+					WithArgs(1, 1).
+					WillReturnRows(sqlmock.NewRows([]string{"account_id"}).AddRow(1))
 				sqlMock.ExpectBegin()
 				sqlMock.ExpectExec("INSERT INTO `transactions`").
 					WithArgs(1, 4, float64(250.45), sqlmock.AnyArg()).
